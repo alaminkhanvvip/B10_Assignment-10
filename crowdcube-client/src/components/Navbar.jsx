@@ -32,7 +32,7 @@ const Navbar = () => {
     <nav className="navbar bg-base-100/80 backdrop-blur-lg shadow-sm sticky top-0 z-50 border-b border-base-300 px-2 md:px-4 flex justify-between" role="navigation" aria-label="Main navigation">
       <div className="navbar-start">
         <Link to="/" className="btn btn-ghost text-lg md:text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent hover:scale-105 transition-transform">
-          🎯 <span className="hidden sm:inline">CrowdCube</span>
+           <span className="hidden sm:inline">CrowdCube</span>
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">

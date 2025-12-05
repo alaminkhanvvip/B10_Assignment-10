@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
+import CampaignCard from '../components/CampaignCard';
 
 const AllCampaigns = () => {
   const [campaigns, setCampaigns] = useState([]);
@@ -41,33 +41,10 @@ const AllCampaigns = () => {
             Sort by Amount {sortAsc ? '↑' : '↓'}
           </button>
         </div>
-        <div className="bg-base-100 rounded-3xl shadow-xl overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="table">
-              <thead className="bg-gradient-to-r from-purple-500/10 to-pink-500/10">
-                <tr>
-                  <th className="text-base font-bold">Title</th>
-                  <th className="text-base font-bold">Type</th>
-                  <th className="text-base font-bold">Min Donation</th>
-                  <th className="text-base font-bold">Deadline</th>
-                  <th className="text-base font-bold">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {campaigns.map(campaign => (
-                  <tr key={campaign._id} className="hover:bg-base-200/50 transition-colors">
-                    <td className="font-semibold">{campaign.title}</td>
-                    <td><span className="badge badge-lg bg-purple-500/20 text-purple-700 border-0">{campaign.type}</span></td>
-                    <td className="text-lg font-bold text-purple-600">${campaign.minDonation}</td>
-                    <td>{new Date(campaign.deadline).toLocaleDateString()}</td>
-                    <td>
-                      <Link to={`/campaign/${campaign._id}`} className="btn btn-sm btn-primary rounded-xl">View Details</Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {campaigns.map(campaign => (
+            <CampaignCard key={campaign._id} campaign={campaign} />
+          ))}
         </div>
       </div>
     </div>

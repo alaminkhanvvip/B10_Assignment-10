@@ -153,6 +153,18 @@ app.post('/donations', async (req, res) => {
   }
 });
 
+// GET all donations
+app.get('/donations', async (req, res) => {
+  try {
+    const collection = db.collection('donations');
+    const data = await collection.find({}).toArray();
+    res.send(data);
+  } catch (error) {
+    console.error('Error fetching donations:', error);
+    res.status(500).send({ error: 'Failed to fetch donations' });
+  }
+});
+
 // GET user's donations
 app.get('/my-donations', async (req, res) => {
   try {
