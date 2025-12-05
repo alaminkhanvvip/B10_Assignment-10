@@ -2,9 +2,16 @@
 
 A modern, full-stack crowdfunding platform built with React and Node.js. Create campaigns, accept donations, and manage your fundraising journey.
 
+## 🔗 Live Links
+
+- **Git Repository:** https://github.com/alaminkhanvvip/B10_Assignment-10
+- **Live Frontend:** https://crowdcube-5c366.web.app
+- **Backend API:** https://crowdcube-backend-c4vm29frd-al-amin-khans-projects-45c6353d.vercel.app
+
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Node.js (v18+)
 - MongoDB Atlas account
 - Firebase project
@@ -12,30 +19,35 @@ A modern, full-stack crowdfunding platform built with React and Node.js. Create 
 ### Installation
 
 **1. Clone & Install**
+
 ```bash
-git clone <repository-url>
+git clone https://github.com/alaminkhanvvip/B10_Assignment-10
 cd B10_Assignment-10
 ```
 
 **2. Backend Setup**
+
 ```bash
 cd crowdcube-backend
 npm install
 ```
 
 Create `.env.local`:
+
 ```env
 MONGODB_URI=your_mongodb_connection_string
 PORT=5000
 ```
 
 **3. Frontend Setup**
+
 ```bash
 cd crowdcube-client
 npm install
 ```
 
 Create `.env.local`:
+
 ```env
 VITE_APIKEY=your_firebase_api_key
 VITE_AUTHDOMAIN=your_firebase_auth_domain
@@ -47,6 +59,7 @@ VITE_API_URL=http://localhost:5000
 ```
 
 **4. Run Application**
+
 ```bash
 # Terminal 1 - Backend
 cd crowdcube-backend
@@ -73,6 +86,7 @@ Visit `http://localhost:5173`
 ## 🛠️ Tech Stack
 
 **Frontend**
+
 - React 19
 - React Router DOM
 - Firebase Authentication
@@ -81,6 +95,7 @@ Visit `http://localhost:5173`
 - React Hot Toast
 
 **Backend**
+
 - Node.js + Express
 - MongoDB
 - CORS
@@ -104,16 +119,16 @@ B10_Assignment-10/
 
 ## 🌐 API Endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/data` | Get all campaigns |
-| GET | `/data/:id` | Get campaign by ID |
-| GET | `/my-campaigns?email=` | Get user's campaigns |
-| POST | `/add-campaign` | Create new campaign |
-| PUT | `/update-campaign/:id` | Update campaign |
-| DELETE | `/delete-campaign/:id` | Delete campaign |
-| POST | `/donations` | Add donation |
-| GET | `/my-donations?email=` | Get user's donations |
+| Method | Endpoint               | Description          |
+| ------ | ---------------------- | -------------------- |
+| GET    | `/data`                | Get all campaigns    |
+| GET    | `/data/:id`            | Get campaign by ID   |
+| GET    | `/my-campaigns?email=` | Get user's campaigns |
+| POST   | `/add-campaign`        | Create new campaign  |
+| PUT    | `/update-campaign/:id` | Update campaign      |
+| DELETE | `/delete-campaign/:id` | Delete campaign      |
+| POST   | `/donations`           | Add donation         |
+| GET    | `/my-donations?email=` | Get user's donations |
 
 ## 📄 License
 
@@ -121,4 +136,8 @@ MIT License - feel free to use this project for learning purposes.
 
 ## 👨‍💻 Author
 
-Built with ❤️ for Programming Hero Assignment.
+Built with ❤️ by Al Amin Khan for Programming Hero Assignment
+
+---
+
+**Project Status:** ✅ Live and Deployed
