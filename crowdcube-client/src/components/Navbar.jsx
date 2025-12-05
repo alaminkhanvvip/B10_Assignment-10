@@ -1,71 +1,75 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const handleLogout = () => {
-    logOut()
-      .then(() => toast.success('Logged out successfully'))
-      .catch(() => toast.error('Logout failed'));
+  const closeDropdown = () => setIsOpen(false);
+
+  const handleLogout = async () => {
+    closeDropdown();
+    try {
+      await logOut();
+      toast.success('Logged out successfully');
+    } catch {
+      toast.error('Logout failed');
+    }
   };
 
+  const activeClassName = ({isActive}) => isActive ? 'text-primary font-semibold' : '';
+
   const navLinks = (
-    <>
-      <li><NavLink to="/">Home</NavLink></li>
-      <li><NavLink to="/campaigns">All Campaign</NavLink></li>
-      {user && (
-        <>
-          <li><NavLink to="/add-campaign">Add New Campaign</NavLink></li>
-          <li><NavLink to="/my-campaign">My Campaign</NavLink></li>
-          <li><NavLink to="/my-donations">My Donations</NavLink></li>
-        </>
-      )}
-    </>
+    <div className='flex gap-10'>
+      <li><NavLink to="/" className={activeClassName}>Home</NavLink></li>
+      <li><NavLink to="/campaigns" className={activeClassName}>All Campaigns</NavLink></li>
+    </div>
   );
 
   return (
-    <div className="navbar bg-base-100 shadow-lg px-4">
+    <nav className="navbar bg-base-100/80 backdrop-blur-lg shadow-sm sticky top-0 z-50 border-b border-base-300 px-2 md:px-4 flex justify-between" role="navigation" aria-label="Main navigation">
       <div className="navbar-start">
-        <div className="dropdown">
-          <label tabIndex={0} className="btn btn-ghost lg:hidden">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
-            </svg>
-          </label>
-          <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-            {navLinks}
-          </ul>
-        </div>
-        <Link to="/" className="btn btn-ghost text-xl">CrowdCube</Link>
+        <Link to="/" className="btn btn-ghost text-lg md:text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent hover:scale-105 transition-transform">
+          🎯 <span className="hidden sm:inline">CrowdCube</span>
+        </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
+        <ul className="menu menu-horizontal px-1 gap-1">
           {navLinks}
         </ul>
       </div>
       <div className="navbar-end gap-2">
         {user ? (
-          <>
-            <div className="tooltip tooltip-bottom" data-tip={user.displayName}>
-              <div className="avatar">
-                <div className="w-10 rounded-full">
-                  <img src={user.photoURL || 'https://via.placeholder.com/150'} alt="User" />
-                </div>
+          <div className="relative">
+            <div tabIndex={0} role="button" onClick={() => setIsOpen(!isOpen)} className="btn btn-ghost btn-circle btn-sm md:btn-md avatar cursor-pointer">
+              <div className="w-8 h-8 md:w-10 md:h-10 rounded-full ring-2 ring-purple-500 ring-offset-2">
+                <img src={user.photoURL || 'https://via.placeholder.com/150'} alt={user.displayName || 'User avatar'} />
               </div>
             </div>
-            <button onClick={handleLogout} className="btn btn-sm">Logout</button>
-          </>
+            {isOpen && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={closeDropdown}></div>
+                <ul className="absolute right-0 top-full mt-2 menu bg-base-100/95 backdrop-blur-xl rounded-2xl z-50 w-64 p-3 shadow-2xl border border-purple-200">
+                  <li><NavLink to="/add-campaign" onClick={closeDropdown} className="rounded-xl hover:bg-purple-50 hover:text-purple-600">📝 Add Campaign</NavLink></li>
+                  <li><NavLink to="/my-campaign" onClick={closeDropdown} className="rounded-xl hover:bg-purple-50 hover:text-purple-600">📋 My Campaigns</NavLink></li>
+                  <li><NavLink to="/my-donations" onClick={closeDropdown} className="rounded-xl hover:bg-purple-50 hover:text-purple-600">💝 My Donations</NavLink></li>
+                  <li className="border-t border-base-200 mt-2 pt-2">
+                    <button onClick={handleLogout} className="rounded-xl text-error hover:bg-error/10 w-full hover:bg-purple-50 hover:text-purple-600">🚪 Logout</button>
+                  </li>
+                </ul>
+              </>
+            )}
+          </div>
         ) : (
-          <>
-            <Link to="/login" className="btn btn-sm">Login</Link>
-            <Link to="/register" className="btn btn-sm btn-primary">Register</Link>
-          </>
+          <div className="flex gap-1 md:gap-2">
+            <Link to="/login" className="btn btn-xs md:btn-sm btn-ghost rounded-xl">Login</Link>
+            <Link to="/register" className="btn btn-xs md:btn-sm btn-primary rounded-xl">Register</Link>
+          </div>
         )}
       </div>
-    </div>
+    </nav>
   );
 };
 

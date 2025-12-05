@@ -5,15 +5,19 @@ import CampaignCard from '../components/CampaignCard';
 const Home = () => {
   const [campaigns, setCampaigns] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     axios.get('http://localhost:5000/data?limit=6')
       .then(res => {
         const runningCampaigns = res.data.filter(c => new Date(c.deadline) > new Date());
         setCampaigns(runningCampaigns.slice(0, 6));
-        setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch(err => {
+        setError('Failed to load campaigns');
+        console.error('Error loading campaigns:', err);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   if (loading) {
@@ -24,69 +28,88 @@ const Home = () => {
     );
   }
 
+  if (error) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="alert alert-error">
+          <span>{error}</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="container mx-auto px-4">
-      {/* Banner */}
-      <div className="carousel w-full h-96 rounded-lg my-8">
-        <div className="carousel-item relative w-full">
-          <div className="hero min-h-full bg-gradient-to-r from-purple-500 to-pink-500">
-            <div className="hero-content text-center text-white">
-              <div className="max-w-md">
-                <h1 className="text-5xl font-bold">Fund Your Dreams</h1>
-                <p className="py-6">Join thousands of creators bringing their ideas to life</p>
-              </div>
+    <div className="min-h-screen">
+      {/* Hero Banner */}
+      <div className="relative h-[600px] bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 overflow-hidden">
+        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="relative container mx-auto px-4 h-full flex items-center">
+          <div className="max-w-3xl text-white space-y-6">
+            <h1 className="text-6xl md:text-7xl font-extrabold leading-tight">Fund Your Dreams</h1>
+            <p className="text-xl md:text-2xl text-white/90">Join thousands of creators bringing their ideas to life through community support</p>
+            <div className="flex gap-4 pt-4">
+              <a href="/add-campaign" className="btn btn-lg bg-white text-purple-600 hover:bg-gray-100 border-0">Start Campaign</a>
+              <a href="/campaigns" className="btn btn-lg btn-outline text-white border-white hover:bg-white hover:text-purple-600">Explore</a>
             </div>
           </div>
         </div>
       </div>
 
       {/* Running Campaigns */}
-      <section className="my-12">
-        <h2 className="text-3xl font-bold text-center mb-8">Running Campaigns</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {campaigns.map(campaign => (
-            <CampaignCard key={campaign._id} campaign={campaign} />
-          ))}
-        </div>
-      </section>
-
-      {/* Extra Section 1 */}
-      <section className="my-12 bg-base-200 p-8 rounded-lg">
-        <h2 className="text-3xl font-bold text-center mb-6">How It Works</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="text-center">
-            <div className="text-4xl mb-4">🎯</div>
-            <h3 className="font-bold text-xl">Create Campaign</h3>
-            <p>Share your idea with the world</p>
+      <section className="py-20 bg-base-100">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Running Campaigns</h2>
+            <p className="text-lg text-base-content/70">Support innovative projects making a difference</p>
           </div>
-          <div className="text-center">
-            <div className="text-4xl mb-4">💰</div>
-            <h3 className="font-bold text-xl">Get Funded</h3>
-            <p>Receive support from backers</p>
-          </div>
-          <div className="text-center">
-            <div className="text-4xl mb-4">🚀</div>
-            <h3 className="font-bold text-xl">Make It Happen</h3>
-            <p>Bring your project to life</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {campaigns.map(campaign => (
+              <CampaignCard key={campaign._id} campaign={campaign} />
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Extra Section 2 */}
-      <section className="my-12">
-        <h2 className="text-3xl font-bold text-center mb-6">Success Stories</h2>
-        <div className="stats stats-vertical lg:stats-horizontal shadow w-full">
-          <div className="stat">
-            <div className="stat-title">Total Campaigns</div>
-            <div className="stat-value">1,200+</div>
+      {/* How It Works */}
+      <section className="py-20 bg-gradient-to-b from-base-200 to-base-100">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">How It Works</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div className="text-center space-y-4">
+              <div className="w-20 h-20 mx-auto bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-4xl">🎯</div>
+              <h3 className="text-2xl font-bold">Create Campaign</h3>
+              <p className="text-base-content/70">Share your idea with the world and set your funding goal</p>
+            </div>
+            <div className="text-center space-y-4">
+              <div className="w-20 h-20 mx-auto bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center text-4xl">💰</div>
+              <h3 className="text-2xl font-bold">Get Funded</h3>
+              <p className="text-base-content/70">Receive support from backers who believe in your vision</p>
+            </div>
+            <div className="text-center space-y-4">
+              <div className="w-20 h-20 mx-auto bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center text-4xl">🚀</div>
+              <h3 className="text-2xl font-bold">Make It Happen</h3>
+              <p className="text-base-content/70">Bring your project to life and make an impact</p>
+            </div>
           </div>
-          <div className="stat">
-            <div className="stat-title">Funds Raised</div>
-            <div className="stat-value">$2.5M</div>
-          </div>
-          <div className="stat">
-            <div className="stat-title">Happy Backers</div>
-            <div className="stat-value">15,000+</div>
+        </div>
+      </section>
+
+      {/* Stats */}
+      <section className="py-20 bg-base-100">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="text-center p-8 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-3xl">
+              <div className="text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">1,200+</div>
+              <div className="text-lg font-semibold mt-2">Total Campaigns</div>
+            </div>
+            <div className="text-center p-8 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-3xl">
+              <div className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">$2.5M</div>
+              <div className="text-lg font-semibold mt-2">Funds Raised</div>
+            </div>
+            <div className="text-center p-8 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-3xl">
+              <div className="text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">15,000+</div>
+              <div className="text-lg font-semibold mt-2">Happy Backers</div>
+            </div>
           </div>
         </div>
       </section>

@@ -31,27 +31,25 @@ const Login = () => {
   };
 
   return (
-    <div className="hero min-h-screen bg-base-200">
-      <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-        <form onSubmit={handleLogin} className="card-body">
-          <h2 className="text-2xl font-bold text-center">Login</h2>
+    <div className="min-h-screen bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 flex items-center justify-center p-4">
+      <div className="card w-full max-w-md bg-base-100 shadow-2xl rounded-3xl">
+        <form onSubmit={handleLogin} className="card-body p-8 space-y-6">
+          <h2 className="text-4xl font-bold text-center bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Welcome Back</h2>
           <div className="form-control">
-            <label className="label"><span className="label-text">Email</span></label>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="input input-bordered" required />
+            <label className="label"><span className="label-text font-semibold">Email</span></label>
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="input input-bordered rounded-xl" required />
           </div>
           <div className="form-control">
-            <label className="label"><span className="label-text">Password</span></label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="input input-bordered" required />
+            <label className="label"><span className="label-text font-semibold">Password</span></label>
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="input input-bordered rounded-xl" required />
           </div>
-          <div className="form-control mt-6">
-            <button type="submit" className="btn btn-primary">Login</button>
-          </div>
+          <button type="submit" className="btn btn-primary btn-lg rounded-xl w-full">Login</button>
           <div className="divider">OR</div>
-          <button type="button" onClick={handleGoogleLogin} className="btn btn-outline gap-2">
-            <FaGoogle /> Google Login
+          <button type="button" onClick={handleGoogleLogin} className="btn btn-outline rounded-xl gap-2 w-full">
+            <FaGoogle /> Continue with Google
           </button>
-          <p className="text-center text-sm mt-4">
-            Don't have an account? <Link to="/register" className="link link-primary">Register</Link>
+          <p className="text-center text-sm">
+            Don't have an account? <Link to="/register" className="link link-primary font-semibold">Register</Link>
           </p>
         </form>
       </div>

@@ -35,31 +35,29 @@ const Register = () => {
   };
 
   return (
-    <div className="hero min-h-screen bg-base-200">
-      <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-        <form onSubmit={handleRegister} className="card-body">
-          <h2 className="text-2xl font-bold text-center">Register</h2>
+    <div className="min-h-screen bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center p-4">
+      <div className="card w-full max-w-md bg-base-100 shadow-2xl rounded-3xl">
+        <form onSubmit={handleRegister} className="card-body p-8 space-y-4">
+          <h2 className="text-4xl font-bold text-center bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Create Account</h2>
           <div className="form-control">
-            <label className="label"><span className="label-text">Name</span></label>
-            <input type="text" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="input input-bordered" required />
-          </div>
-          <div className="form-control">
-            <label className="label"><span className="label-text">Email</span></label>
-            <input type="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className="input input-bordered" required />
+            <label className="label"><span className="label-text font-semibold">Name</span></label>
+            <input type="text" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="input input-bordered rounded-xl" required />
           </div>
           <div className="form-control">
-            <label className="label"><span className="label-text">Photo URL</span></label>
-            <input type="url" value={formData.photo} onChange={(e) => setFormData({...formData, photo: e.target.value})} className="input input-bordered" required />
+            <label className="label"><span className="label-text font-semibold">Email</span></label>
+            <input type="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className="input input-bordered rounded-xl" required />
           </div>
           <div className="form-control">
-            <label className="label"><span className="label-text">Password</span></label>
-            <input type="password" value={formData.password} onChange={(e) => setFormData({...formData, password: e.target.value})} className="input input-bordered" required />
+            <label className="label"><span className="label-text font-semibold">Photo URL</span></label>
+            <input type="url" value={formData.photo} onChange={(e) => setFormData({...formData, photo: e.target.value})} className="input input-bordered rounded-xl" required />
           </div>
-          <div className="form-control mt-6">
-            <button type="submit" className="btn btn-primary">Register</button>
+          <div className="form-control">
+            <label className="label"><span className="label-text font-semibold">Password</span></label>
+            <input type="password" value={formData.password} onChange={(e) => setFormData({...formData, password: e.target.value})} className="input input-bordered rounded-xl" required />
           </div>
-          <p className="text-center text-sm mt-4">
-            Already have an account? <Link to="/login" className="link link-primary">Login</Link>
+          <button type="submit" className="btn btn-primary btn-lg rounded-xl w-full mt-4">Register</button>
+          <p className="text-center text-sm">
+            Already have an account? <Link to="/login" className="link link-primary font-semibold">Login</Link>
           </p>
         </form>
       </div>

@@ -1,6 +1,7 @@
 import axios from 'axios';
+import config from '../config/env.js';
 
-const API_BASE_URL = 'http://localhost:5000';
+const API_BASE_URL = config.apiUrl;
 
 // Campaign APIs
 export const getAllCampaigns = (limit) => {
